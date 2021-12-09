@@ -1,0 +1,3 @@
+import lanternfish
+
+lanternfish.solution()
