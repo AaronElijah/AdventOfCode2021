@@ -1,10 +1,11 @@
 from typing import Dict
 import copy
 
+
 def get_initial_fish():
     initial_fish = []
-    with open("input.txt", 'r') as f:
-        for fish in f.readline().split(','):
+    with open("input.txt", "r") as f:
+        for fish in f.readline().split(","):
             initial_fish.append(int(fish))
     # initial_fish = [3,4,3,1,2]
     fish_counts = {
@@ -23,10 +24,11 @@ def get_initial_fish():
         fish_counts[fish] += 1
     return fish_counts
 
+
 def simulate(fish_count: Dict[int, int], num_days: int) -> Dict[int, int]:
     day = 0
     while day < num_days:
-        new_fish_count = {        
+        new_fish_count = {
             -1: 0,
             0: 0,
             1: 0,
@@ -39,7 +41,7 @@ def simulate(fish_count: Dict[int, int], num_days: int) -> Dict[int, int]:
             8: 0,
         }
         for i in range(8, -1, -1):
-            new_fish_count[i-1] = fish_count[i]
+            new_fish_count[i - 1] = fish_count[i]
             if i == 0:
                 new_fish_count[8] = fish_count[0]
                 new_fish_count[6] = new_fish_count[6] + fish_count[0]
@@ -50,11 +52,12 @@ def simulate(fish_count: Dict[int, int], num_days: int) -> Dict[int, int]:
         day += 1
     return fish_count
 
+
 def solution():
     fish_count = get_initial_fish()
     print(fish_count)
     print(simulate(fish_count, 256))
-    
+
 
 if __name__ == "__main__":
     solution()

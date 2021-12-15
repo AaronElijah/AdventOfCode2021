@@ -2,7 +2,7 @@ from typing import List, Set, Tuple
 
 
 def get_display() -> List[Tuple[List[Set[str]], List[Set[str]]]]:
-    with open('input.txt' ,'r') as f:
+    with open("input.txt", "r") as f:
         res = []
         for line in f.read().splitlines():
             connections, displays = line.split(" | ")
@@ -31,14 +31,52 @@ if __name__ == "__main__":
             6: None,
             7: next(filter(lambda c: len(c) == 3, connections)),
             8: next(filter(lambda c: len(c) == 7, connections)),
-            9: None,            
+            9: None,
         }
-        number_to_connection[9] = next(filter(lambda c: len(c) == 6 and number_to_connection[4].issubset(c), connections))
-        number_to_connection[0] = next(filter(lambda c: len(c) == 6 and not number_to_connection[4].issubset(c) and number_to_connection[1].issubset(c), connections))
-        number_to_connection[6] = next(filter(lambda c: len(c) == 6 and not number_to_connection[4].issubset(c) and not number_to_connection[1].issubset(c), connections))
-        number_to_connection[5] = next(filter(lambda c: len(c) == 5 and c.issubset(number_to_connection[6]), connections))
-        number_to_connection[3] = next(filter(lambda c: len(c) == 5 and number_to_connection[1].issubset(c) and not c.issubset(number_to_connection[6]), connections))
-        number_to_connection[2] = next(filter(lambda c: len(c) == 5 and not number_to_connection[1].issubset(c) and not c.issubset(number_to_connection[6]), connections))
+        number_to_connection[9] = next(
+            filter(
+                lambda c: len(c) == 6 and number_to_connection[4].issubset(c),
+                connections,
+            )
+        )
+        number_to_connection[0] = next(
+            filter(
+                lambda c: len(c) == 6
+                and not number_to_connection[4].issubset(c)
+                and number_to_connection[1].issubset(c),
+                connections,
+            )
+        )
+        number_to_connection[6] = next(
+            filter(
+                lambda c: len(c) == 6
+                and not number_to_connection[4].issubset(c)
+                and not number_to_connection[1].issubset(c),
+                connections,
+            )
+        )
+        number_to_connection[5] = next(
+            filter(
+                lambda c: len(c) == 5 and c.issubset(number_to_connection[6]),
+                connections,
+            )
+        )
+        number_to_connection[3] = next(
+            filter(
+                lambda c: len(c) == 5
+                and number_to_connection[1].issubset(c)
+                and not c.issubset(number_to_connection[6]),
+                connections,
+            )
+        )
+        number_to_connection[2] = next(
+            filter(
+                lambda c: len(c) == 5
+                and not number_to_connection[1].issubset(c)
+                and not c.issubset(number_to_connection[6]),
+                connections,
+            )
+        )
 
         output = ""
         for d in displays:

@@ -2,18 +2,25 @@ from typing import List
 
 BINGO_SELECTION_SIZE = 25
 
+
 def get_bingo_selections() -> List[List[List[str]]]:
-    with open('selections.txt') as f:
+    with open("selections.txt") as f:
         readings = [int(num) for num in f.read().split()]
-        flat_bingo_selections = [readings[i:i+BINGO_SELECTION_SIZE] for i in range(0, len(readings), BINGO_SELECTION_SIZE)]
+        flat_bingo_selections = [
+            readings[i : i + BINGO_SELECTION_SIZE]
+            for i in range(0, len(readings), BINGO_SELECTION_SIZE)
+        ]
         grouped_bingo_selections = []
         for bingo_selection in flat_bingo_selections:
-            grouped_bingo_selections.append([bingo_selection[i:i+5] for i in range(0, len(bingo_selection), 5)])
+            grouped_bingo_selections.append(
+                [bingo_selection[i : i + 5] for i in range(0, len(bingo_selection), 5)]
+            )
     return grouped_bingo_selections
+
 
 def get_numbers() -> List[int]:
     with open("numbers.txt") as f:
-        readings = [int(num) for num in f.read().split(',')]
+        readings = [int(num) for num in f.read().split(",")]
     return readings
 
 
@@ -39,18 +46,30 @@ def is_bingo(bingo_selection: List[List[int]]) -> bool:
             col.append(bingo_selection[i])
         if all(num == -1 for num in col):
             return True
-    
+
     return False
 
-def calculate_final_answer(filled_bingo_selection: List[List[int]], winning_num: int) -> int:
-    return sum(filter(lambda val: val != -1, [val for row in filled_bingo_selection for val in row])) * winning_num
+
+def calculate_final_answer(
+    filled_bingo_selection: List[List[int]], winning_num: int
+) -> int:
+    return (
+        sum(
+            filter(
+                lambda val: val != -1,
+                [val for row in filled_bingo_selection for val in row],
+            )
+        )
+        * winning_num
+    )
+
 
 if __name__ == "__main__":
     bingos = get_bingo_selections()
     numbers = get_numbers()
-    
+
     remaining_bingos = get_bingo_selections()
-    
+
     winning_num = 0
     loser = 0
     for num in numbers:
