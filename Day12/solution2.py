@@ -22,6 +22,7 @@ def get_edges() -> Dict[str, List[str]]:
                 edge_map[b] = [a]
     return edge_map
 
+
 def is_able_visit_next_node(next_node: str, cur_path: List[str]) -> bool:
     if next_node == "start":  # cannot revisit start node
         return False
@@ -30,18 +31,21 @@ def is_able_visit_next_node(next_node: str, cur_path: List[str]) -> bool:
         return True
     # check for if a single small cave has been visited twice
     node_count = Counter(cur_path)
-    
+
     for key, value in node_count.items():
         if key.islower() and value == 2:
             if key == next_node:
                 return False  # cannot visit a small cave three times
             else:
-                if node_count[next_node] == 0:  # can visit a small cave at least once but cannot visit two small caves twice
+                if (
+                    node_count[next_node] == 0
+                ):  # can visit a small cave at least once but cannot visit two small caves twice
                     return True
                 else:
                     return False
     else:
         return True  # no small caves have been visited twice
+
 
 def find_paths(
     edge_map: Dict[str, List[str]], path: List[str], all_paths: List[List[str]]
@@ -54,8 +58,8 @@ def find_paths(
 
     cur_path_length = len(path)
     for next_node in edge_map[cur_node]:
-        if (
-            is_able_visit_next_node(next_node, path)
+        if is_able_visit_next_node(
+            next_node, path
         ):  # check the current node hasn't been visited or is an upper case big cave
             path = path + [next_node]
             find_paths(edge_map, path, all_paths)
